@@ -1,0 +1,29 @@
+<script>
+function httpGet() {
+  var freqRaw = document.getElementById("freqInputId").value;
+  var freq = Math.pow(10, Math.floor(freqRaw/2)) * ((freqRaw % 2) * 2 + 1);
+  var duty = document.getElementById("dutyInputId").value;
+  var lux = document.getElementById("luxInputId").value;
+  var override = document.getElementById("overrideInputId").checked;
+  document.getElementById("dutySpanId").innerHTML = duty;
+  document.getElementById("freqSpanId").innerHTML = freq.toPrecision(1);
+  document.getElementById("luxSpanId").innerHTML = lux;
+  var overrideString = "";
+  if (override == true) overrideString = "automatic"; else overrideString = "manual";
+  document.getElementById("overrideSpanId").innerHTML = overrideString;
+  var url = '/' + duty + '/' + freq + '/' + lux + "/" + override;
+  console.log(url);
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() { 
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+          pending=false;
+  }
+  xmlHttp.open('GET', url, true); // true for asynchronous 
+  xmlHttp.send(null);
+}
+</script>
+<input type='range' min='0' max='15' value='5' oninput="httpGet()" onchange="httpGet()" id="freqInputId">Switching frequency: <span id="freqSpanId">?</span> Hz<br /><br />
+<input type='range' min='0' max='1000' value='200' oninput="httpGet()" onchange="httpGet()" id="luxInputId">Automatic light intensity: <span id="luxSpanId">?</span> Lux<br /><br />
+<input type='range' min='0' max='100' value='50' oninput="httpGet()" onchange="httpGet()" id="dutyInputId">Manual duty: <span id="dutySpanId">?</span>%<br /><br />
+<input type='checkBox' onchange="httpGet()" id="overrideInputId">Mode: <span id="overrideSpanId">?</span>
+
