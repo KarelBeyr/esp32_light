@@ -1,5 +1,5 @@
 <script>
-function httpGet() {
+function sendData() {
   var freqRaw = document.getElementById("freqInputId").value;
   var freq = Math.pow(10, Math.floor(freqRaw/2)) * ((freqRaw % 2) * 2 + 1);
   var duty = document.getElementById("dutyInputId").value;
@@ -18,12 +18,14 @@ function httpGet() {
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
           pending=false;
   }
-  xmlHttp.open('GET', url, true); // true for asynchronous 
+  xmlHttp.open('PUT', url, true); // true for asynchronous 
   xmlHttp.send(null);
 }
 </script>
-<input type='range' min='0' max='15' value='5' oninput="httpGet()" onchange="httpGet()" id="freqInputId">Switching frequency: <span id="freqSpanId">?</span> Hz<br /><br />
-<input type='range' min='0' max='1000' value='200' oninput="httpGet()" onchange="httpGet()" id="luxInputId">Automatic light intensity: <span id="luxSpanId">?</span> Lux<br /><br />
-<input type='range' min='0' max='100' value='50' oninput="httpGet()" onchange="httpGet()" id="dutyInputId">Manual duty: <span id="dutySpanId">?</span>%<br /><br />
-<input type='checkBox' onchange="httpGet()" id="overrideInputId">Mode: <span id="overrideSpanId">?</span>
+<input type='range' min='0' max='15' value='5' oninput="sendData()" onchange="sendData()" id="freqInputId">Switching frequency: <span id="freqSpanId">?</span> Hz<br /><br />
+<input type='range' min='0' max='1000' value='200' oninput="sendData()" onchange="sendData()" id="luxInputId">Automatic light intensity: <span id="luxSpanId">?</span> Lux<br /><br />
+<input type='range' min='0' max='100' value='50' oninput="sendData()" onchange="sendData()" id="dutyInputId">Manual duty: <span id="dutySpanId">?</span>%<br /><br />
+<input type='checkBox' onchange="sendData()" id="overrideInputId">Mode: <span id="overrideSpanId">?</span><br /><br />
+Kolikrat je nizsi intenzita na danem miste oproti oknu: <input type="text" value='1' id="ratioInputId"><br /><br />
+Kolik je traba svitit duty aby se zvysila intenzita o 100 lux: <input type="text" value='1' id="dutyCoeffInputId">
 
