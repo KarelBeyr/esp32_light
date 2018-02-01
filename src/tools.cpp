@@ -1,15 +1,6 @@
 #include <Arduino.h>
 #include "tools.h"
 
-// State::State(int freq, int duty, int desiredLux, int measuredLux, bool automaticMode, float utlumStin, float dutyFor100lux) {
-//   _freq = freq;
-//   _duty = duty;
-//   _desiredLux = desiredLux;
-//   _measuredLux = measuredLux;
-//   _automaticMode = automaticMode;
-//   _utlumStin = utlumStin;
-//   _dutyFor100lux = dutyFor100lux;
-// };
 State::State(int f, int d, int dl, int ml, bool a, float u, float df) {
   freq = f;
   duty = d;

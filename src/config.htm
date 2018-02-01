@@ -1,0 +1,19 @@
+<script>
+function sendData() {
+  var ratio = document.getElementById('ratioInputId').value;
+  var coeff = document.getElementById('dutyCoeffInputId').value;
+  var url = '/config/' + ratio + '/' + coeff + '/';
+  console.log(url);
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() { 
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+          pending=false;
+  }
+  xmlHttp.open('PUT', url, true); // true for asynchronous 
+  xmlHttp.send(null);
+}
+</script>
+Kolikrat je nizsi intenzita na danem miste oproti oknu: <input type='text' value='1' id='ratioInputId'><br /><br />
+Kolik je traba svitit duty aby se zvysila intenzita o 100 lux: <input type='text' value='1' id='dutyCoeffInputId'><br /><br />
+<input type='submit' onclick='sendData()'>
+

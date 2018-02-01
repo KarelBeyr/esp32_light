@@ -1,5 +1,7 @@
 #ifndef Led_h
 #define Led_h
+#include "tools.h"
+
 // use first channel of 16 channels (started from zero)
 #define LEDC_CHANNEL_0 0
 
@@ -8,5 +10,5 @@
 
 #define LED_PIN 2 
 
-void changeLedPwm(int duty, int freq, bool automaticMode, int measuredLux, int desiredLux, float utlumStin, float dutyFor100lux);
+void changeLedPwm(State* state);
 #endif
