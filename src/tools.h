@@ -5,7 +5,7 @@ void blink(int times, int msHigh, int msLow);
 class State
 {
   public:
-    State(int f, int d, int dl, int ml, bool a, float u, float df);
+    State(int f, int d, int dl, int ml, bool a, float u, float df, int cd);
     int freq;
     int duty;
     int desiredLux;
@@ -13,6 +13,8 @@ class State
     bool automaticMode;
     float utlumStin;
     float dutyFor100lux;
+    int currentDuty;
+
   private:
 };
 #endif

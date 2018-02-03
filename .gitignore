@@ -4,3 +4,5 @@
 .vscode/launch.json
 src/passwords.h
 src/passwords.cpp
+.clang_complete
+.gcc-flags.json

@@ -6,56 +6,73 @@
 
 //http://tomeko.net/online_tools/cpp_text_escape.php?lang=en
 const char *webPages[] = {
-    "",
-    "<script>\n"
-    "function sendData() {\n"
-    "  var freqRaw = document.getElementById('freqInputId').value;\n"
-    "  var freq = Math.pow(10, Math.floor(freqRaw/2)) * ((freqRaw % 2) * 2 + 1);\n"
-    "  var duty = document.getElementById('dutyInputId').value;\n"
-    "  var lux = document.getElementById('luxInputId').value;\n"
-    "  var override = document.getElementById('overrideInputId').checked;\n"
-    "  document.getElementById('dutySpanId').innerHTML = duty;\n"
-    "  document.getElementById('freqSpanId').innerHTML = freq.toPrecision(1);\n"
-    "  document.getElementById('luxSpanId').innerHTML = lux;\n"
-    "  var overrideString = '';\n"
-    "  if (override == true) overrideString = 'automatic'; else overrideString = 'manual';\n"
-    "  document.getElementById(\"overrideSpanId\").innerHTML = overrideString;\n"
-    "  var url = '/data/' + duty + '/' + freq + '/' + lux + '/' + override + '/';\n"
-    "  console.log(url);\n"
-    "  var xmlHttp = new XMLHttpRequest();\n"
-    "  xmlHttp.onreadystatechange = function() { \n"
-    "      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)\n"
-    "          pending=false;\n"
-    "  }\n"
-    "  xmlHttp.open('PUT', url, true); // true for asynchronous \n"
-    "  xmlHttp.send(null);\n"
-    "}\n"
-    "</script>\n"
-    "<input type='range' min='0' max='15' value='5' oninput='sendData()' onchange='sendData()' id='freqInputId'>Switching frequency: <span id='freqSpanId'>?</span> Hz<br /><br />\n"
-    "<input type='range' min='0' max='1000' value='200' oninput='sendData()' onchange='sendData()' id='luxInputId'>Automatic light intensity: <span id='luxSpanId'>?</span> Lux<br /><br />\n"
-    "<input type='range' min='0' max='100' value='50' oninput='sendData()' onchange='sendData()' id='dutyInputId'>Manual duty: <span id='dutySpanId'>?</span>%<br /><br />\n"
-    "<input type='checkBox' onchange='sendData()' id='overrideInputId'>Mode: <span id='overrideSpanId'>?</span><br /><br />\n"
-    "",
-    "<script>\n"
-    "function sendData() {\n"
-    "  var ratio = document.getElementById('ratioInputId').value;\n"
-    "  var coeff = document.getElementById('dutyCoeffInputId').value;\n"
-    "  var url = '/config/' + ratio + '/' + coeff + '/';\n"
-    "  console.log(url);\n"
-    "  var xmlHttp = new XMLHttpRequest();\n"
-    "  xmlHttp.onreadystatechange = function() { \n"
-    "      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)\n"
-    "          pending=false;\n"
-    "  }\n"
-    "  xmlHttp.open('PUT', url, true); // true for asynchronous \n"
-    "  xmlHttp.send(null);\n"
-    "}\n"
-    "</script>\n"
-    "Kolikrat je nizsi intenzita na danem miste oproti oknu: <input type='text' value='1' id='ratioInputId'><br /><br />\n"
-    "Kolik je traba svitit duty aby se zvysila intenzita o 100 lux: <input type='text' value='1' id='dutyCoeffInputId'><br /><br />\n"
-    "<input type='submit' onclick='sendData()'>\n"
-    "\n"
-    ""};
+"",
+"<script>\n"
+"var freq;\n"
+"var duty;\n"
+"var lux;\n"
+"var override;\n"
+"\n"
+"function redraw() {\n"
+"  var freqRaw = document.getElementById('freqInputId').value;\n"
+"  freq = Math.pow(10, Math.floor(freqRaw/2)) * ((freqRaw % 2) * 2 + 1);\n"
+"  duty = document.getElementById('dutyInputId').value;\n"
+"  lux = document.getElementById('luxInputId').value;\n"
+"  override = document.getElementById('overrideInputId').checked;\n"
+"  document.getElementById('dutySpanId').innerHTML = duty;\n"
+"  document.getElementById('freqSpanId').innerHTML = freq.toPrecision(1);\n"
+"  document.getElementById('luxSpanId').innerHTML = lux;\n"
+"  var overrideString = '';\n"
+"  if (override == true) overrideString = 'automatic'; else overrideString = 'manual';\n"
+"  document.getElementById(\"overrideSpanId\").innerHTML = overrideString;\n"
+"}\n"
+"\n"
+"function sendData() {\n"
+"  redraw();\n"
+"  var url = '/data/' + duty + '/' + freq + '/' + lux + '/' + override + '/';\n"
+"  console.log(url);\n"
+"  var xmlHttp = new XMLHttpRequest();\n"
+"  xmlHttp.onreadystatechange = function() { \n"
+"      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)\n"
+"          pending=false;\n"
+"  }\n"
+"  xmlHttp.open('PUT', url, true); // true for asynchronous \n"
+"  xmlHttp.send(null);\n"
+"}\n"
+"</script>\n"
+"<input type='range' min='0' max='15' value='currentFreq' oninput='sendData()' onchange='sendData()' id='freqInputId'>Switching frequency: <span id='freqSpanId'>?</span> Hz<br /><br />\n"
+"<input type='range' min='0' max='1000' value='currentALI' oninput='sendData()' onchange='sendData()' id='luxInputId'>Automatic light intensity: <span id='luxSpanId'>?</span> Lux<br /><br />\n"
+"<input type='range' min='0' max='100' value='currentDuty' oninput='sendData()' onchange='sendData()' id='dutyInputId'>Manual duty: <span id='dutySpanId'>?</span>%<br /><br />\n"
+"<input type='checkBox' currentModeChecked onchange='sendData()' id='overrideInputId'>Mode: <span id='overrideSpanId'>?</span><br /><br />\n"
+"<script>\n"
+"  redraw();\n"
+"</script>\n"
+"",
+"<script>\n"
+"function sendData() {\n"
+"  var ratio = document.getElementById('ratioInputId').value;\n"
+"  var coeff = document.getElementById('dutyCoeffInputId').value;\n"
+"  var url = '/config/' + ratio + '/' + coeff + '/';\n"
+"  console.log(url);\n"
+"  var xmlHttp = new XMLHttpRequest();\n"
+"  xmlHttp.onreadystatechange = function() { \n"
+"      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)\n"
+"          pending=false;\n"
+"  }\n"
+"  xmlHttp.open('PUT', url, true); // true for asynchronous \n"
+"  xmlHttp.send(null);\n"
+"}\n"
+"</script>\n"
+"Kolikrat je nizsi intenzita na danem miste oproti oknu: <input type='text' value='currentRatio' id='ratioInputId'><br /><br />\n"
+"Kolik je traba svitit duty aby se zvysila intenzita o 100 lux: <input type='text' value='current100lux' id='dutyCoeffInputId'><br /><br />\n"
+"<input type='submit' onclick='sendData()'>\n"
+"\n"
+"",
+"Build date: "
+__DATE__
+" build time: "
+__TIME__
+};
 
 WiFiServer httpServer(80);
 
@@ -102,29 +119,41 @@ void processDataLine(bool logToSerial, State *state, String line)
     state->desiredLux = getParameterAfterSlash(line, 4).toInt();
     String overrideString = getParameterAfterSlash(line, 5);
     if (overrideString == "true")
-    {
         state->automaticMode = true;
-    }
     else
-    {
         state->automaticMode = false;
-    }
     if (logToSerial)
-    {
         Serial.println("duty: " + String(state->duty) + ", freq: " + String(state->freq) + ", desired lux: " + String(state->desiredLux) + ", mode: " + String(state->automaticMode));
-    }
     changeLedPwm(state);
 }
 
 void processConfigLine(bool logToSerial, State *state, String line)
 {
-    state->utlumStin = getParameterAfterSlash(line, 2).toInt();
-    state->dutyFor100lux = getParameterAfterSlash(line, 3).toInt();
+    state->utlumStin = getParameterAfterSlash(line, 2).toFloat();
+    state->dutyFor100lux = getParameterAfterSlash(line, 3).toFloat();
     if (logToSerial)
-    {
         Serial.println("utlum: " + String(state->utlumStin) + ", dutyFor100lux: " + String(state->dutyFor100lux));
-    }
     changeLedPwm(state);
+}
+
+void printPageToClient(WiFiClient client, int pageType, State *state)
+{
+  String str = webPages[pageType];
+  if (pageType == 1)
+  {
+    int freqBase = round(log10(state->freq)) * 2 + ((state->freq - 1) % 3) / 2;
+    str.replace("currentFreq", String(freqBase));
+    str.replace("currentALI", String(state->desiredLux));
+    str.replace("currentDuty", String(state->duty));
+    String status = "";
+    if (state->automaticMode == true) status = "checked";
+    str.replace("currentModeChecked", status);
+  } else if (pageType == 2)
+  {
+    str.replace("currentRatio", String(state->utlumStin));
+    str.replace("current100lux", String(state->dutyFor100lux));
+  }
+  client.print(str); // the content of the HTTP response follows the header:
 }
 
 void maybeServeClient(bool logToSerial, State *state)
@@ -156,6 +185,8 @@ void maybeServeClient(bool logToSerial, State *state)
                         pageType = 1;
                     if (currentLine.startsWith("GET /config"))
                         pageType = 2;
+                    if (currentLine.startsWith("GET /ver"))
+                        pageType = 3;
                     // if the current line is blank, you got two newline characters in a row.
                     // that's the end of the client HTTP request, so send a response:
                     if (currentLine.length() == 0)
@@ -163,7 +194,8 @@ void maybeServeClient(bool logToSerial, State *state)
                         client.println("HTTP/1.1 200 OK");        // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
                         client.println("Content-type:text/html"); // and a content-type so the client knows what's coming, then a blank line:
                         client.println();
-                        client.print(webPages[pageType]); // the content of the HTTP response follows the header:
+                        printPageToClient(client, pageType, state);
+
                         client.println();                 // The HTTP response ends with another blank line:
                         break;                            // break out of the while loop:
                     }

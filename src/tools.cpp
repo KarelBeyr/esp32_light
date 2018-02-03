@@ -1,21 +1,25 @@
 #include <Arduino.h>
 #include "tools.h"
 
-State::State(int f, int d, int dl, int ml, bool a, float u, float df) {
-  freq = f;
-  duty = d;
-  desiredLux = dl;
-  measuredLux = ml;
-  automaticMode = a;
-  utlumStin = u;
-  dutyFor100lux = df;
+State::State(int f, int d, int dl, int ml, bool a, float u, float df, int cd)
+{
+    freq = f;
+    duty = d;
+    desiredLux = dl;
+    measuredLux = ml;
+    automaticMode = a;
+    utlumStin = u;
+    dutyFor100lux = df;
+    currentDuty = cd;
 };
 
-void blink(int times, int msHigh, int msLow) {
-  for (int i = 0; i < times; i++ ) {
-    digitalWrite(2, HIGH);
-    delay(msHigh);
-    digitalWrite(2, LOW);
-    delay(msLow);
-  }
+void blink(int times, int msHigh, int msLow)
+{
+    for (int i = 0; i < times; i++)
+    {
+        digitalWrite(2, HIGH);
+        delay(msHigh);
+        digitalWrite(2, LOW);
+        delay(msLow);
+    }
 }

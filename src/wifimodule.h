@@ -3,5 +3,5 @@
 #include "tools.h"
 
 void setupWifiServer(bool logToSerial);
-void maybeServeClient(bool logToSerial, State* state);
+void maybeServeClient(bool logToSerial, State *state);
 #endif
