@@ -3,6 +3,7 @@
 #include "wifimodule.h"
 #include "passwords.h"
 #include "led.h"
+#include "thingspeak.h"
 
 //http://tomeko.net/online_tools/cpp_text_escape.php?lang=en
 const char *webPages[] = {
@@ -99,6 +100,8 @@ void setupWifiServer(bool logToSerial)
         Serial.println(WiFi.localIP());
     }
     httpServer.begin();
+    IPAddress ip = WiFi.localIP();
+    logMessageToThingspeak(String(ip[2]) + "." + String(ip[3]));
 }
 
 String getParameterAfterSlash(String line, int nr)
@@ -124,6 +127,7 @@ void processDataLine(bool logToSerial, State *state, String line)
         state->automaticMode = false;
     if (logToSerial)
         Serial.println("duty: " + String(state->duty) + ", freq: " + String(state->freq) + ", desired lux: " + String(state->desiredLux) + ", mode: " + String(state->automaticMode));
+    saveState(state);
     changeLedPwm(state);
 }
 
@@ -133,6 +137,7 @@ void processConfigLine(bool logToSerial, State *state, String line)
     state->dutyFor100lux = getParameterAfterSlash(line, 3).toFloat();
     if (logToSerial)
         Serial.println("utlum: " + String(state->utlumStin) + ", dutyFor100lux: " + String(state->dutyFor100lux));
+    saveState(state);
     changeLedPwm(state);
 }
 

@@ -6,6 +6,7 @@ class State
 {
   public:
     State(int f, int d, int dl, int ml, bool a, float u, float df, int cd);
+    State();
     int freq;
     int duty;
     int desiredLux;
@@ -17,4 +18,8 @@ class State
 
   private:
 };
+
+void readState(State* state);
+void saveState(State* state);
+
 #endif

@@ -6,17 +6,15 @@
 #include "wifimodule.h"
 #include "ota.h"
 
-State state = State(3, 50, 200, 0, true, 4, 10, -1);
+State state = State();
 
 void setup()
 {
+  readState(&state);
   Serial.begin(115200);
   pinMode(2, OUTPUT);
-  blink(3, 500, 500);
-  delay(10);
   setupWifiServer(false);
   setupOta();
-  blink(5, 300, 300);
   changeLedPwm(&state);
 }
 
