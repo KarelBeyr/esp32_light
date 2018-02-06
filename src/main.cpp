@@ -10,8 +10,8 @@ State state = State();
 
 void setup()
 {
-  setupLed();
   readState(&state);
+  setupLed(&state);
   Serial.begin(115200);
   setupWifiServer(false);
   setupOta();

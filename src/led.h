@@ -10,6 +10,6 @@
 
 #define LED_PIN 2
 
-void setupLed();
+void setupLed(State *state);
 void changeLedPwm(State* state);
 #endif

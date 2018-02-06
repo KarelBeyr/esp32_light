@@ -117,6 +117,7 @@ String getParameterAfterSlash(String line, int nr)
 
 void processDataLine(bool logToSerial, State *state, String line)
 {
+    int oldFreq = state->freq;
     state->duty = getParameterAfterSlash(line, 2).toInt();
     state->freq = getParameterAfterSlash(line, 3).toInt();
     state->desiredLux = getParameterAfterSlash(line, 4).toInt();
@@ -128,6 +129,8 @@ void processDataLine(bool logToSerial, State *state, String line)
     if (logToSerial)
         Serial.println("duty: " + String(state->duty) + ", freq: " + String(state->freq) + ", desired lux: " + String(state->desiredLux) + ", mode: " + String(state->automaticMode));
     saveState(state);
+    if (oldFreq != state->freq)
+      setupLed(state);
     changeLedPwm(state);
 }
 
