@@ -8,7 +8,8 @@
 // use 13 bit precission for LEDC timer
 #define LEDC_TIMER_13_BIT 13
 
-#define LED_PIN 2 
+#define LED_PIN 2
 
+void setupLed();
 void changeLedPwm(State* state);
 #endif

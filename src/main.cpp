@@ -10,9 +10,9 @@ State state = State();
 
 void setup()
 {
+  setupLed();
   readState(&state);
   Serial.begin(115200);
-  pinMode(2, OUTPUT);
   setupWifiServer(false);
   setupOta();
   changeLedPwm(&state);

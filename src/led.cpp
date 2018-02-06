@@ -7,10 +7,15 @@ void ledcAnalogWrite(uint8_t channel, uint32_t value, uint32_t valueMax = 255)
     ledcWrite(channel, duty);
 }
 
+void setupLed()
+{
+  pinMode(2, OUTPUT);  //mozna netreba?
+  ledcSetup(LEDC_CHANNEL_0, 100, LEDC_TIMER_13_BIT);
+  ledcAttachPin(LED_PIN, LEDC_CHANNEL_0);
+}
+
 void changeLedPwm(State *state)
 {
-    ledcSetup(LEDC_CHANNEL_0, state->freq, LEDC_TIMER_13_BIT);
-    ledcAttachPin(LED_PIN, LEDC_CHANNEL_0);
     if (state->automaticMode == false)
         state->currentDuty = state->duty;
     else
