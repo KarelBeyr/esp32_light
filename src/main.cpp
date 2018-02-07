@@ -5,11 +5,14 @@
 #include "thingspeak.h"
 #include "wifimodule.h"
 #include "ota.h"
+#include "esp_system.h"
+#include "watchdog.h"
 
 State state = State();
 
 void setup()
 {
+  setupWatchdog();
   readState(&state);
   setupLed(&state);
   Serial.begin(115200);
@@ -20,6 +23,7 @@ void setup()
 
 void loop()
 {
+  feedWatchdog();
   delay(50); //otestovat zda se neusmazi
   maybeServeClient(false, &state);
   maybeInquireThingspeak(&state);

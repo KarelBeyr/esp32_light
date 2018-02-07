@@ -195,6 +195,12 @@ void maybeServeClient(bool logToSerial, State *state)
                         pageType = 2;
                     if (currentLine.startsWith("GET /ver"))
                         pageType = 3;
+                    if (currentLine.startsWith("GET /bluescreen"))
+                    {
+                        while(true) {
+                          //lockup to test watchdog
+                        }
+                    }
                     // if the current line is blank, you got two newline characters in a row.
                     // that's the end of the client HTTP request, so send a response:
                     if (currentLine.length() == 0)
